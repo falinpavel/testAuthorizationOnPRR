@@ -12,7 +12,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 
 public class LoginPageTest {
-
     private WebDriver driver;
     private WebDriverWait wait;
 
@@ -21,9 +20,9 @@ public class LoginPageTest {
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
         // Создание экземпляра WebDriver для Chrome
         driver = new ChromeDriver();
-        // Установка ожидания 15 секунд
-        driver.manage().window().maximize();
         // Развернуть на весь экран
+        driver.manage().window().maximize();
+        // Установка ожидания 15 секунд/
         wait = new WebDriverWait(driver, Duration.ofSeconds(15)); // Инициализация объекта явного ожидания
     }
 
@@ -31,29 +30,33 @@ public class LoginPageTest {
     public void loginTest() {
         // Открытие страницы
         driver.get("https://web-hotfix-test11.k8s.trudvsem.ru/");
-
         // Нажатие на кнопку "Войти" по XPath
-        WebElement loginButton = driver.findElement(By.xpath("/html/body/div[1]/div/div[4]/div/div/a/span"));
+        WebElement loginButton = driver.findElement(By.xpath("//body//div[@class='mega-menu__user-interface']//a"));
         loginButton.click();
-
         // Нажатие на кнопку входа через госуслуги
-        WebElement submitButton = driver.findElement(By.xpath("//*[@id='laborer']/div/div[1]/div[2]/div/form/button"));
+        WebElement submitButton = driver.findElement(By.xpath("//body//main//div[@class='mb-3 row']//button"));
         submitButton.click();
-
         // Дожидаемся загрузки страницы ввода логина и пароля
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//*[@id='login']")));
-
-        // Ввод логина
+        // Ввод логина на форме авторизации ЕСИА
         WebElement loginField = driver.findElement(By.xpath("//*[@id='login']"));
-        loginField.sendKeys("+7(976)4017944");
-
-        // Ввод пароля
+        loginField.sendKeys("+7(929)8405043");
+        // Ввод пароля на форме авторизации ЕСИА
         WebElement passwordField = driver.findElement(By.xpath("//*[@id='password']"));
         passwordField.sendKeys("Y3a!5eT$");
-
-        // Нажатие на кнопку "Войти"
-        WebElement loginSubmitButton = driver.findElement(By.xpath("/html/body/esia-root/div/esia-login/div/div[1]/form/div[4]/button"));
+        // Нажатие на кнопку "Войти" на форме авторизации ЕСИА
+        WebElement loginSubmitButton = driver.findElement(By.xpath("//body//div//button[@class='plain-button plain-button_wide']"));
         loginSubmitButton.click();
+        // Дождаться загрузки страницы
+        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='individual_button']")));
+        // Нажать на кнопку "individual_button"
+        WebElement individualButton = driver.findElement(By.xpath("//*[@id='individual_button']"));
+        individualButton.click();
+        // Дождаться полной загрузки страницы
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='ib-display_templates']/h1")));
+        // Проверка, что страница успешно загружена
+        //WebElement pageTitle = driver.findElement(By.xpath("//div[@class='ib-display_templates']/h1"));
+        //assert pageTitle.getText().equals("Мой кабинет");
     }
 
     @AfterEach
@@ -62,3 +65,4 @@ public class LoginPageTest {
         driver.quit();
     }
 }
+
