@@ -9,17 +9,30 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import page.BaseTest;
-
 import java.time.Duration;
 
-public class LoginPageTest extends BaseTest {
-    private WebDriver driver;
-    private WebDriverWait wait;
+public class LoginPageTest {
+    public static BasePage BasePage;
+    public static WebDriver driver;
+    public static WebDriverWait wait;
+
+    @BeforeEach
+    public void setUp() {
+        //System.setProperty("webdriver.chrome.driver", "C:\\chromedriver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", ConfProperties.getProperty("chromedriver"));
+        // Создание экземпляра WebDriver для Chrome
+        driver = new ChromeDriver();
+        // Развернуть на весь экран
+        driver.manage().window().maximize();
+        // Установка ожидания 15 секунд/
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15)); // Инициализация объекта явного ожидания
+        driver.get(ConfProperties.getProperty("stand"));
+        BasePage = new BasePage(driver);
+    }
     @Test
     public void loginTest() {
         // Открытие страницы
-        driver.get("https://web-hotfix-test11.k8s.trudvsem.ru/");
+        //driver.get("https://web-hotfix-test11.k8s.trudvsem.ru/");
         // Нажатие на кнопку "Войти" по XPath
         WebElement loginButton = driver.findElement(By.xpath("//body//div[@class='mega-menu__user-interface']//a"));
         loginButton.click();
@@ -47,5 +60,10 @@ public class LoginPageTest extends BaseTest {
         // Проверка, что страница успешно загружена
         //WebElement pageTitle = driver.findElement(By.xpath("//div[@class='ib-display_templates']/h1"));
         //assert pageTitle.getText().equals("Мой кабинет");
+    }
+        @AfterEach
+        public void tearDown() {
+            // Закрытие браузера
+            driver.quit();
     }
 }
