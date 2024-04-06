@@ -2,62 +2,109 @@ package com.bft.trudvsem;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.json.JsonOutput;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-public class BasePage extends LoginPageTest { // добавил extends
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import org.openqa.selenium.interactions.Actions;
+
+public class BasePage extends LoginPageTest { // нужел ли тут extends???
     public WebDriver driver;
-    public BasePage(WebDriver driver) {
+    public BasePage (WebDriver driver) {
         PageFactory.initElements(driver,this);
         this.driver = driver;
     }
+    Actions actions = new Actions(LoginPageTest.driver);
+
+
     // Нажатие на кнопку "Войти" по XPath
     @FindBy(xpath = "//body//div[@class='mega-menu__user-interface']//a")
-    private WebElement loginBaseButton; // может без private???
+    private WebElement loginBaseButton;
     // Нажатие на кнопку входа через госуслуги
     @FindBy(xpath = "//body//main//div[@class='mb-3 row']//button")
-    private WebElement loginEsia; // может без private???
+    private WebElement loginEsia;
     // Ввод логина на форме авторизации ЕСИА
     @FindBy(xpath = "//*[@id='login']")
-    private WebElement inputLoginEsia; // может без private???
+    private WebElement inputLoginEsia;
     // Ввод пароля на форме авторизации ЕСИА
     @FindBy(xpath = "//*[@id='password']")
-    private WebElement inputPasswordEsia; // может без private???
+    private WebElement inputPasswordEsia;
     // Нажатие на кнопку "Войти" на форме авторизации ЕСИА
     @FindBy(xpath = "//body//div//button[@class='plain-button plain-button_wide']")
-    private WebElement clickEnter; // может без private???
+    private WebElement clickEnter;
     // Нажать на кнопку "individual_button" (соискатель)
     @FindBy(xpath = "//*[@id='individual_button']")
-    private WebElement clickApplicant; // может без private???
+    private WebElement clickApplicant;
 
     // МЕТОДЫ
     // простой клик на кнопку"Войти"
     public void clickloginBaseButton () {
-        loginBaseButton.click();
+        try {
+            wait.until(ExpectedConditions.visibilityOf(loginBaseButton));
+            System.out.println("Лог - нажатие на кнопку 'Войти'");
+            loginBaseButton.click();
+        }   catch (Exception e) {
+            System.out.println("Кнопка не найдена или не кликабельна");
+        }
     }
-
     // простой клик на кнопку "Войти через Госуслуги"
     public void clickloginEsia () {
-        loginEsia.click();
+        try {
+            // Ожидание появления элемента
+            wait.until(ExpectedConditions.visibilityOf(loginEsia));
+            // Логирование нажатия на кнопу
+            System.out.println("Лог - нажатие на кнопку 'Войти через Госуслуги'");
+            // Нажатие на кнопку
+            loginEsia.click();
+        } catch (Exception e) {
+            System.out.println("Кнопка не найдена или не кликабельна");
+        }
     }
-
     // Ввод логина ЕСИА
     public void inputLoginEsia (String login) {
-        inputLoginEsia.sendKeys(login);
+        try {
+            if (inputLoginEsia.isEnabled()) {
+                inputLoginEsia.clear();
+                inputLoginEsia.sendKeys(login);
+                System.out.println("Лог - очистка поля и успешный ввод логина");
+            } else {
+                System.out.println("Лог - поле ввода логина недоступно");
+            }
+        } catch (Exception e) {
+            System.out.println("Лог - что то пошло не так при вооде логина");
+        }
     }
-
     // ввод пароля ЕСИА
     public void inputPasswordEsia (String password) {
-        inputPasswordEsia.sendKeys(password);
+        try {
+            if (inputPasswordEsia.isEnabled()) {
+                // очистка поля ввода
+                inputPasswordEsia.clear();
+                //Ввод пароля
+                inputPasswordEsia.sendKeys(password);
+                System.out.println("Лог - очистка поля и успешный ввод пароля");
+            } else {
+                System.out.println("Лог - поле недоступно");
+            }
+        } catch (Exception e) {
+            System.out.println("Лог - что то пошло не так при вводе пароля");
+        }
     }
-
     // Клик на кнопку "Войти" в ЕСИА
     public void clickEnter () {
+        wait.until(ExpectedConditions.visibilityOf(clickEnter));
+        actions.moveToElement(clickEnter).perform();
+        System.out.println("Лог - наведение и клик на кнопку 'Войти' на фоме ЕСИА");
         clickEnter.click();
     }
-
     // Клик на кнопку "Соискатель"
-    public void clickApplicant () {
+    public void hoverAndClickOnApplicantButton () {
+        wait.until(ExpectedConditions.visibilityOf(clickApplicant));
+        actions.moveToElement(clickApplicant).perform();
+        System.out.println("Лог - наведение и ожидание");
+        //actions.click(clickApplicant);
         clickApplicant.click();
     }
-
 }
