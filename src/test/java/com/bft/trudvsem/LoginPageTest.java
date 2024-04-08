@@ -1,5 +1,6 @@
 package com.bft.trudvsem;
 
+import org.junit.Test;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

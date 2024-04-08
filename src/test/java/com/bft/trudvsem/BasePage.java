@@ -9,14 +9,16 @@ import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class BasePage extends LoginPageTest { // нужел ли тут extends???
+public class BasePage { // нужел ли тут extends???
     public WebDriver driver;
     public BasePage (WebDriver driver) {
         PageFactory.initElements(driver,this);
         this.driver = driver;
     }
     Actions actions = new Actions(LoginPageTest.driver);
+    public static WebDriverWait wait;
 
 
     // Нажатие на кнопку "Войти" по XPath
@@ -37,6 +39,20 @@ public class BasePage extends LoginPageTest { // нужел ли тут extends?
     // Нажать на кнопку "individual_button" (соискатель)
     @FindBy(xpath = "//*[@id='individual_button']")
     private WebElement clickApplicant;
+
+    // ВЕБ ЭЛЕМЕНТЫ ДЛЯ СОЗДАНИЯ РЕЗЮМЕ
+
+    // Навести и кликнуть на "Мои резюме" в главном меню (дропдаун)
+    @FindBy (xpath = "//*[@id=megaMenuDropdown1]")
+    private WebElement hoverAndClickDropDownCv;
+    // кликнуть на "Список моих резюме"
+    @FindBy (xpath = "//*[@id=_69ac3118-a070-4c06-89d4-1ba784ae9851]/nav/ul/li[2]/ul/li[1]/a")
+    private WebElement ClickAllCv;
+    // Кликнуть на кнопку "Добавить резюме"
+    @FindBy (xpath = "//*[@id=_cc3b03d4-07fc-402d-a0ab-aab1533e88e0]/div[1]/div[1]/button[1]")
+    private WebElement ClickCreateNewCv;
+
+
 
     // МЕТОДЫ
     // простой клик на кнопку"Войти"
@@ -107,4 +123,30 @@ public class BasePage extends LoginPageTest { // нужел ли тут extends?
         //actions.click(clickApplicant);
         clickApplicant.click();
     }
+
+    // МЕТОДЫ ДЛЯ СОЗДАНИЯ РЕЗЮМЕ
+    public void setHoverAndClickDropDownCv () {
+        wait.until(ExpectedConditions.visibilityOf(hoverAndClickDropDownCv));
+        actions.moveToElement(hoverAndClickDropDownCv).perform();
+        hoverAndClickDropDownCv.click();
+        System.out.println("Лог - ожидание, наведение и клик на кнопку 'Мои резюме'");
+    }
+
+    public void setClickAllCv () {
+        try {
+            wait.until(ExpectedConditions.visibilityOf(ClickAllCv));
+            ClickAllCv.click();
+        } catch (Exception e) {
+            System.out.println("Лог - что то пошло не так при клике на кнопку 'Список всех резюме'");
+        }
+    }
+
+    public void setClickCreateNewCv () {
+        wait.until(ExpectedConditions.visibilityOf(ClickCreateNewCv));
+        ClickCreateNewCv.click();
+    }
+
+
+
+
 }
