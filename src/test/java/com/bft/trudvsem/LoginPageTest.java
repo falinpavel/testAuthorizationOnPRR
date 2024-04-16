@@ -1,6 +1,5 @@
 package com.bft.trudvsem;
 
-import org.junit.Test;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -51,6 +50,12 @@ public class LoginPageTest {
         BasePage.hoverAndClickOnApplicantButton();
         // Дождаться полной загрузки страницы
         wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='ib-display_templates']/h1")));
+
+        //Создание резюме
+        BasePage.setHoverAndClickDropDownCv();
+        BasePage.setClickAllCv();
+        BasePage.setClickCreateNewCv();
+
     }
     @AfterEach
     public void tearDown() {

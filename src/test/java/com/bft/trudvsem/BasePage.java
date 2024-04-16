@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class BasePage { // нужел ли тут extends???
+public class BasePage {
     public WebDriver driver;
     public BasePage (WebDriver driver) {
         PageFactory.initElements(driver,this);
@@ -19,7 +19,6 @@ public class BasePage { // нужел ли тут extends???
     }
     Actions actions = new Actions(LoginPageTest.driver);
     public static WebDriverWait wait;
-
 
     // Нажатие на кнопку "Войти" по XPath
     @FindBy(xpath = "//body//div[@class='mega-menu__user-interface']//a")
@@ -58,24 +57,24 @@ public class BasePage { // нужел ли тут extends???
     // простой клик на кнопку"Войти"
     public void clickloginBaseButton () {
         try {
-            wait.until(ExpectedConditions.visibilityOf(loginBaseButton));
-            System.out.println("Лог - нажатие на кнопку 'Войти'");
+            //wait.until(ExpectedConditions.visibilityOf(loginBaseButton));
             loginBaseButton.click();
+            System.out.println("Лог - нажатие на кнопку 'Войти'");
         }   catch (Exception e) {
-            System.out.println("Кнопка не найдена или не кликабельна");
+            System.out.println("Кнопка 'Войти' не найдена или не кликабельна");
         }
     }
     // простой клик на кнопку "Войти через Госуслуги"
     public void clickloginEsia () {
         try {
             // Ожидание появления элемента
-            wait.until(ExpectedConditions.visibilityOf(loginEsia));
+            //wait.until(ExpectedConditions.visibilityOf(loginEsia));
             // Логирование нажатия на кнопу
+            loginEsia.click();
             System.out.println("Лог - нажатие на кнопку 'Войти через Госуслуги'");
             // Нажатие на кнопку
-            loginEsia.click();
         } catch (Exception e) {
-            System.out.println("Кнопка не найдена или не кликабельна");
+            System.out.println("Кнопка 'Войти через Госуслуги' не найдена или не кликабельна");
         }
     }
     // Ввод логина ЕСИА
@@ -89,7 +88,7 @@ public class BasePage { // нужел ли тут extends???
                 System.out.println("Лог - поле ввода логина недоступно");
             }
         } catch (Exception e) {
-            System.out.println("Лог - что то пошло не так при вооде логина");
+            System.out.println("Лог - что то пошло не так при вводе логина");
         }
     }
     // ввод пароля ЕСИА
@@ -102,7 +101,7 @@ public class BasePage { // нужел ли тут extends???
                 inputPasswordEsia.sendKeys(password);
                 System.out.println("Лог - очистка поля и успешный ввод пароля");
             } else {
-                System.out.println("Лог - поле недоступно");
+                System.out.println("Лог - поле ввода пароля недоступно");
             }
         } catch (Exception e) {
             System.out.println("Лог - что то пошло не так при вводе пароля");
@@ -110,7 +109,7 @@ public class BasePage { // нужел ли тут extends???
     }
     // Клик на кнопку "Войти" в ЕСИА
     public void clickEnter () {
-        wait.until(ExpectedConditions.visibilityOf(clickEnter));
+        //wait.until(ExpectedConditions.visibilityOf(clickEnter));
         actions.moveToElement(clickEnter).perform();
         System.out.println("Лог - наведение и клик на кнопку 'Войти' на фоме ЕСИА");
         clickEnter.click();
@@ -119,9 +118,9 @@ public class BasePage { // нужел ли тут extends???
     public void hoverAndClickOnApplicantButton () {
         wait.until(ExpectedConditions.visibilityOf(clickApplicant));
         actions.moveToElement(clickApplicant).perform();
-        System.out.println("Лог - наведение и ожидание");
-        //actions.click(clickApplicant);
         clickApplicant.click();
+        System.out.println("Лог - наведение, ожидание и клик на кнопку 'Соискатель'");
+        //actions.click(clickApplicant);
     }
 
     // МЕТОДЫ ДЛЯ СОЗДАНИЯ РЕЗЮМЕ
