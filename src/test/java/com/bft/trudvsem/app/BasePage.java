@@ -1,11 +1,10 @@
-package com.bft.trudvsem;
+package com.bft.trudvsem.app;
 
+import com.bft.trudvsem.tests.LoginPageTest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.json.JsonOutput;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import org.openqa.selenium.interactions.Actions;
@@ -144,8 +143,4 @@ public class BasePage {
         wait.until(ExpectedConditions.visibilityOf(ClickCreateNewCv));
         ClickCreateNewCv.click();
     }
-
-
-
-
 }

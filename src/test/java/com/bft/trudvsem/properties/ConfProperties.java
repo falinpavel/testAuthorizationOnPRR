@@ -1,4 +1,4 @@
-package com.bft.trudvsem;
+package com.bft.trudvsem.properties;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
