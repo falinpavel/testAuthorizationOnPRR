@@ -6,9 +6,9 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class LoginPageTest extends GlobalSetting {
+public class CreateNewCvTest extends GlobalSetting {
     @Test
-    public void loginTest () {
+    public void createCv () {
         // Нажатие на кнопку "Войти" по XPath
         BasePage.clickloginBaseButton();
         // Клик на кнопку "Войти через ЕСИА"
@@ -24,12 +24,13 @@ public class LoginPageTest extends GlobalSetting {
         // Дождаться загрузки страницы
         wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='individual_button']")));
         // Навести и нажать на кнопку "Войти как соискатель"
-        //BasePage.hoverAndClickOnApplicantButton();
+        BasePage.hoverAndClickOnApplicantButton();
         // Дождаться полной загрузки страницы
-        //wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='ib-display_templates']/h1")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='ib-display_templates']/h1")));
+
         //Создание резюме
-        //BasePage.setHoverAndClickDropDownCv();
-        //BasePage.setClickAllCv();
-        //BasePage.setClickCreateNewCv();
+        CraateNewCv.setHoverAndClickDropDownCv();
+        CraateNewCv.setClickAllCv();
+        CraateNewCv.setClickCreateNewCv();
     }
 }

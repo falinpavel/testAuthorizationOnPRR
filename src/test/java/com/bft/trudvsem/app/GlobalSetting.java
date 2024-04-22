@@ -1,5 +1,6 @@
 package com.bft.trudvsem.app;
 
+import com.bft.trudvsem.pages.BasePage;
 import com.bft.trudvsem.properties.ConfProperties;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -11,8 +12,9 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class GloabalSetting {
-    public static com.bft.trudvsem.app.BasePage BasePage;
+public class GlobalSetting {
+    public static com.bft.trudvsem.pages.BasePage BasePage;
+    public static com.bft.trudvsem.pages.CreateNewCv CraateNewCv;
     public static WebDriver driver;
     public static WebDriverWait wait;
 
